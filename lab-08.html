@@ -403,20 +403,54 @@ values:</p>
 ## 17 MinTemp       0.0102 
 ## 18 MaxTemp       0.00867</code></pre>
 <ol style="list-style-type: decimal">
-<li><p>Are there any missing values in our variable of interest
+<li>Are there any missing values in our variable of interest
 <code>RainTomorrow</code>? If so, we filter them out and save the new
-dataset as <code>weather_noNA</code>.</p></li>
-<li><p>Which cities are the ones with more rain days? To do this, let’s
-analyze the <code>RainToday</code> variable.</p></li>
+dataset as <code>weather_noNA</code>.</li>
 </ol>
+<pre class="r"><code>weather_noNA &lt;- weather%&gt;%
+  drop_na()</code></pre>
+<ol start="2" style="list-style-type: decimal">
+<li>Which cities are the ones with more rain days? To do this, let’s
+analyze the <code>RainToday</code> variable.</li>
+</ol>
+<pre class="r"><code>filter(weather_noNA, RainToday == &quot;Yes&quot;)%&gt;%
+  count(Location)%&gt;%
+  arrange(desc(n))</code></pre>
+<pre><code>##            Location   n
+## 1          Portland 804
+## 2            Darwin 800
+## 3            Cairns 762
+## 4      MountGambier 747
+## 5     NorfolkIsland 744
+## 6     SydneyAirport 717
+## 7          Watsonia 711
+## 8          Brisbane 672
+## 9  MelbourneAirport 649
+## 10            Perth 643
+## 11     PerthAirport 559
+## 12        Melbourne 526
+## 13           Hobart 478
+## 14       WaggaWagga 431
+## 15     CoffsHarbour 427
+## 16           Sydney 412
+## 17        Nuriootpa 399
+## 18       Townsville 395
+## 19             Sale 373
+## 20      Williamtown 340
+## 21          Mildura 296
+## 22            Moree 273
+## 23         Canberra 227
+## 24     AliceSprings 189
+## 25          Woomera 129
+## 26            Cobar  64</code></pre>
+<p>Portland has the most rainy days</p>
 </div>
 <div id="exercise-2-logistic-regression" class="section level1">
 <h1>Exercise 2: Logistic regression</h1>
 <p>We will focus our analysis on the city of <code>Portland</code>.
 Remove <code>eval=FALSE</code> from below once you have defined the
 object <code>weather_noNA</code>.</p>
-<pre class="r"><code># remove eval=FALSE
-weather_Portland &lt;- weather_noNA %&gt;%
+<pre class="r"><code>weather_Portland &lt;- weather_noNA %&gt;%
   filter(Location == &quot;Portland&quot;)</code></pre>
 <ol style="list-style-type: decimal">
 <li><p>Try to predict <code>RainTomorrow</code> by fitting a linear

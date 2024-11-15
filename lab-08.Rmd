@@ -46,22 +46,26 @@ weather %>%
 1. Are there any missing values in our variable of interest `RainTomorrow`? If so, we filter them out and save the new dataset as `weather_noNA`. 
 
 ```{r}
+weather_noNA <- weather%>%
+  drop_na()
 
 ```
 
 2. Which cities are the ones with more rain days? To do this, let's analyze the `RainToday` variable. 
 
 ```{r}
-
+filter(weather_noNA, RainToday == "Yes")%>%
+  count(Location)%>%
+  arrange(desc(n))
 ```
+Portland has the most rainy days
 
 # Exercise 2: Logistic regression
 
 We will focus our analysis on the city of `Portland`.
 Remove `eval=FALSE` from below once you have defined the object `weather_noNA`.
 
-```{r eval=FALSE}
-# remove eval=FALSE
+```{r}
 weather_Portland <- weather_noNA %>%
   filter(Location == "Portland")
 ```
