@@ -453,11 +453,23 @@ object <code>weather_noNA</code>.</p>
 <pre class="r"><code>weather_Portland &lt;- weather_noNA %&gt;%
   filter(Location == &quot;Portland&quot;)</code></pre>
 <ol style="list-style-type: decimal">
-<li><p>Try to predict <code>RainTomorrow</code> by fitting a linear
+<li>Try to predict <code>RainTomorrow</code> by fitting a linear
 regression using the variable <code>RainToday</code> and print the
-output using <code>tidy()</code>.</p></li>
-<li><p>For each point in our dataset, what are the fitted probabilities
-that tomorrow it’s going to rain?</p></li>
+output using <code>tidy()</code>.</li>
+</ol>
+<pre class="r"><code>RainToday_fit &lt;- logistic_reg()%&gt;%
+  set_engine(&quot;glm&quot;)%&gt;%
+  fit(RainToday ~ RainTomorrow, data = weather_Portland, family = &quot;binomial&quot;)
+
+tidy(RainToday_fit)</code></pre>
+<pre><code>## # A tibble: 2 × 5
+##   term            estimate std.error statistic  p.value
+##   &lt;chr&gt;              &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;    &lt;dbl&gt;
+## 1 (Intercept)       -0.838    0.0643     -13.0 8.66e-39
+## 2 RainTomorrowYes    1.26     0.0983      12.8 1.05e-37</code></pre>
+<ol start="2" style="list-style-type: decimal">
+<li>For each point in our dataset, what are the fitted probabilities
+that tomorrow it’s going to rain?</li>
 </ol>
 <ul>
 <li>Plot them using an appropriate visualization. What is peculiar about
